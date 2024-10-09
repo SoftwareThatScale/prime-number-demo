@@ -11,6 +11,7 @@ app.get('/primes/:amount', (req, res) => {
   const amount = parseInt(req.params.amount);
   const numbers = findPrimeNumbers(amount);
 
+  res.set('Cache-Control', 'public, max-age=300, s-maxage=3600');
   res.json(numbers);
 });
 

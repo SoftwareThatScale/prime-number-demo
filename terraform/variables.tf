@@ -10,7 +10,7 @@ variable "billing_account_id" {
 
 variable "project_id" {
   type    = string
-  default = "prime-number-demo"
+  default = "prime-number-demo-2"
 }
 
 variable "region" {
@@ -21,4 +21,9 @@ variable "region" {
 variable "backup_region" {
   type    = string
   default = "northamerica-northeast2"
+}
+
+variable "domain" {
+  type    = string
+  default = "prime-number-demo.com"
 }
