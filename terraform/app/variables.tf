@@ -19,5 +19,6 @@ variable "dns_name" {
 }
 
 variable "tag" {
-  type = string
+  type        = string
+  description = "Docker image tag to run"
 }

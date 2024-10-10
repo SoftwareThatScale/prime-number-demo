@@ -29,5 +29,6 @@ variable "domain" {
 }
 
 variable "app_tag" {
-  type = string
+  type        = string
+  description = "App docker image tag"
 }

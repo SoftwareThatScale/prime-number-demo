@@ -14,6 +14,9 @@ resource "google_cloud_run_v2_service" "app" {
     containers {
       image = "northamerica-northeast1-docker.pkg.dev/prime-number-demo-2/docker/prime-number-demo:${var.tag}"
     }
+    scaling {
+      max_instance_count = 1
+    }
   }
 }
 
