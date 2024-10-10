@@ -5,7 +5,8 @@ locals {
     "storage.googleapis.com",
     "compute.googleapis.com",
     "artifactregistry.googleapis.com",
-    "run.googleapis.com"
+    "run.googleapis.com",
+    "monitoring.googleapis.com"
   ]
 }
 

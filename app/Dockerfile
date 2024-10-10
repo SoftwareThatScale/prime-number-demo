@@ -11,4 +11,4 @@ RUN npm run build
 
 EXPOSE 8080
 
-CMD [ "node", "dist/app.js" ]
+CMD [ "node", "--require", "./dist/instrumentation.js", "dist/app.js" ]
