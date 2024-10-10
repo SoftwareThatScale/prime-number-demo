@@ -17,4 +17,5 @@ module "app" {
   backup_region = var.backup_region
   domain        = var.domain
   dns_name      = module.base.dns_name
+  tag           = var.app_tag
 }

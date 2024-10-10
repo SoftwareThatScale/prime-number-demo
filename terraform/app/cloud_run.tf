@@ -12,7 +12,7 @@ resource "google_cloud_run_v2_service" "app" {
   template {
     service_account = google_service_account.app.email
     containers {
-      image = "northamerica-northeast1-docker.pkg.dev/prime-number-demo-2/docker/prime-number-demo:v1.0.1"
+      image = "northamerica-northeast1-docker.pkg.dev/prime-number-demo-2/docker/prime-number-demo:${var.tag}"
     }
   }
 }

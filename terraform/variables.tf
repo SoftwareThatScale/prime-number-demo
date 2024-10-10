@@ -27,3 +27,7 @@ variable "domain" {
   type    = string
   default = "prime-number-demo.com"
 }
+
+variable "app_tag" {
+  type = string
+}

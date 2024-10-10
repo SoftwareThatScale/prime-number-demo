@@ -17,3 +17,7 @@ variable "domain" {
 variable "dns_name" {
   type = string
 }
+
+variable "tag" {
+  type = string
+}
