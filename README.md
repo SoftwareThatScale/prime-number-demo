@@ -6,3 +6,5 @@
   - [Watch YouTube Video](https://www.youtube.com/watch?v=YWrwvWI3pqQ)
 - [Part 3: The Serverless Dream Team Terraform + Cloud Run](https://github.com/softwarethatscale/prime-number-demo/tree/part-03/terraform-cloudrun)
   - [Watch YouTube Video](https://www.youtube.com/watch?v=JkRzhq5Ij-I)
+- [Part 4: Monitoring like Sauron with Grafana & Prometheus](https://github.com/softwarethatscale/prime-number-demo/tree/part-04/monitoring)
+  - [Watch YouTube Video](https://www.youtube.com/watch?v=enD975gK4XA)
