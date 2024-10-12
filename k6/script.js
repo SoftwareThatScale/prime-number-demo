@@ -1,41 +1,31 @@
-import { check } from "k6";
 import http from "k6/http";
+import { check, sleep } from "k6";
 
 export const options = {
   thresholds: {
-    http_req_failed: [{ threshold: "rate<0.01", abortOnFail: true }],
-    http_req_duration: ["p(99)<1000"],
+    http_req_failed: ["rate<0.01"], // http errors should be less than 1%
+    http_req_duration: ["p(99)<200"], // 99% of requests should be below 1s
   },
   scenarios: {
-    breaking: {
+    // arbitrary name of scenario
+    average_load: {
       executor: "ramping-vus",
       stages: [
+        // ramp up to average load of 20 virtual users
         { duration: "10s", target: 20 },
+        // maintain load
         { duration: "50s", target: 20 },
-        { duration: "50s", target: 40 },
-        { duration: "50s", target: 60 },
-        { duration: "50s", target: 80 },
-        { duration: "50s", target: 100 },
-        { duration: "50s", target: 120 },
-        { duration: "50s", target: 140 },
-        //....
+        // ramp down to zero
+        { duration: "5s", target: 0 },
       ],
     },
   },
 };
 
 export default function () {
-  const amount = Math.floor(Math.random() * 5000 + 5);
-  const url = `http://localhost:8080/primes/${amount}`;
-  const params = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
+  let res = http.get("http://localhost:8080/primes/500");
 
-  const res = http.get(url, params);
+  check(res, { "success login": (r) => r.status === 200 });
 
-  check(res, {
-    "response code was 200": (res) => res.status == 200,
-  });
+  sleep(0.3);
 }
