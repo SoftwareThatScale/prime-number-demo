@@ -29,6 +29,13 @@ function isPrimeNumber(number: number): boolean {
 }
 
 export async function findPrimeNumbers(amount: number): Promise<Array<number>> {
+  primeCounter.add(amount);
+
+  const result = await getFromCache<Array<number>>(getCacheKey(amount));
+  if (result) {
+    return result;
+  }
+
   return tracer.startActiveSpan(
     'prime.find',
     {
@@ -38,13 +45,6 @@ export async function findPrimeNumbers(amount: number): Promise<Array<number>> {
     },
     async (span) => {
       try {
-        primeCounter.add(amount);
-
-        const result = await getFromCache<Array<number>>(getCacheKey(amount));
-        if (result) {
-          return result;
-        }
-
         const values: Array<number> = [];
 
         let currentValue = 2;
