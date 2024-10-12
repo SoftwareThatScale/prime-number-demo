@@ -5,7 +5,17 @@ services:
     ports:
       - "8080:8080"
       - "9464:9464"
+    depends_on:
+      - redis
     restart: always
+
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
 
   prometheus:
     image: prom/prometheus
@@ -32,6 +42,13 @@ services:
       - prometheus
     restart: always
 
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    restart: always
+
 volumes:
   prometheus_data: {}
   grafana_data: {}
+  redis_data: {}

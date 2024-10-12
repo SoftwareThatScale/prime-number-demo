@@ -5,13 +5,30 @@ import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentation
 import { HostMetrics } from '@opentelemetry/host-metrics';
 import { metrics } from '@opentelemetry/api';
 import { RuntimeNodeInstrumentation } from '@opentelemetry/instrumentation-runtime-node';
+import { ZipkinExporter } from '@opentelemetry/exporter-zipkin';
+import { Resource } from '@opentelemetry/resources';
+import {
+  ATTR_SERVICE_NAME,
+  ATTR_SERVICE_VERSION,
+} from '@opentelemetry/semantic-conventions';
 
 const prometheusExporter = new PrometheusExporter();
 
 const sdk = new NodeSDK({
+  resource: new Resource({
+    [ATTR_SERVICE_NAME]: 'prime-number-demo',
+    [ATTR_SERVICE_VERSION]: '1.0.0',
+  }),
+  traceExporter: new ZipkinExporter({
+    url: 'http://zipkin:9411/api/v2/spans',
+  }),
   metricReader: prometheusExporter,
   instrumentations: [
-    getNodeAutoInstrumentations(),
+    getNodeAutoInstrumentations({
+      '@opentelemetry/instrumentation-http': {
+        ignoreIncomingRequestHook: (req) => req.url === '/metrics',
+      },
+    }),
     new RuntimeNodeInstrumentation({
       eventLoopUtilizationMeasurementInterval: 5000,
     }),

@@ -12,9 +12,9 @@ const meter = metrics.getMeter('prime-number-demo');
 const counter = meter.createCounter('test');
 counter.add(1);
 
-app.get('/primes/:amount', (req, res) => {
+app.get('/primes/:amount', async (req, res) => {
   const amount = parseInt(req.params.amount);
-  const numbers = findPrimeNumbers(amount);
+  const numbers = await findPrimeNumbers(amount);
 
   res.set('Cache-Control', 'public, max-age=300, s-maxage=3600');
   res.json(numbers);
