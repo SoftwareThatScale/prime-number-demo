@@ -37,30 +37,32 @@ export async function findPrimeNumbers(amount: number): Promise<Array<number>> {
       },
     },
     async (span) => {
-      primeCounter.add(amount);
+      try {
+        primeCounter.add(amount);
 
-      const result = await getFromCache<Array<number>>(getCacheKey(amount));
-      if (result) {
-        return result;
-      }
-
-      const values: Array<number> = [];
-
-      let currentValue = 2;
-
-      do {
-        if (isPrimeNumber(currentValue)) {
-          values.push(currentValue);
+        const result = await getFromCache<Array<number>>(getCacheKey(amount));
+        if (result) {
+          return result;
         }
 
-        currentValue++;
-      } while (values.length < amount && currentValue < Number.MAX_VALUE);
+        const values: Array<number> = [];
 
-      setFromCache(getCacheKey(amount), values);
+        let currentValue = 2;
 
-      span.end();
+        do {
+          if (isPrimeNumber(currentValue)) {
+            values.push(currentValue);
+          }
 
-      return values;
+          currentValue++;
+        } while (values.length < amount && currentValue < Number.MAX_VALUE);
+
+        setFromCache(getCacheKey(amount), values);
+
+        return values;
+      } finally {
+        span.end();
+      }
     }
   );
 }
