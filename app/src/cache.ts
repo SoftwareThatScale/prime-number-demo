@@ -7,7 +7,9 @@ const client = createClient({
 client.connect();
 
 export async function setFromCache(key: string, value: any): Promise<void> {
-  await client.set(key, JSON.stringify(value));
+  await client.set(key, JSON.stringify(value), {
+    EX: 60,
+  });
 }
 
 export async function getFromCache<T>(key: string): Promise<T | null> {
